@@ -27,8 +27,13 @@ class Protocol:
 
     def key_bin_to_str(self, key_bin):
         key_str = self.pilot_period if self.pilot_period else ""
+        line_len = 0  # keep lines under 2500 chars
         for bit in key_bin:
+            if line_len > 2500:
+                key_str += "\nRAW_Data: "
+                line_len = 0
             key_str += self.transposition_table[bit]
+            line_len += len(self.transposition_table[bit])
         return key_str
 
     def de_bruijn(self):
@@ -97,9 +102,9 @@ protocols = [
     Protocol("CAME", 12, {"0": "-320 640 ", "1": "-640 320 "}, "-11520 320 "),
     Protocol("NICE", 12, {"0": "-700 1400 ", "1": "-1400 700 "}, "-25200 700 "),
     # 24 bits take up too much space to upload to github
-    #Protocol("PT-2240", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
-    #Protocol("PT-2262", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
-    Protocol("8bit", 8,  {"0": "200 -400 ", "1": "400 -200 "}),  # generic 8 bit protocol
+    # Protocol("PT-2240", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
+    # Protocol("PT-2262", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
+    Protocol("8bit", 8, {"0": "200 -400 ", "1": "400 -200 "}),  # generic 8 bit protocol
 ]
 
 for p in protocols:
