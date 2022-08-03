@@ -14,6 +14,20 @@ To generate all the files simply run:
 python3 flipperzero-bruteforce.py
 ```
 
+It will generate bruteforce files for all the specified protocols organized in many folders with the following structure:
+
+```
+sub_files/
+└── PROTOCOL_NAME
+    ├── SPLIT_FACTOR
+    │   ├── 000.sub
+    │   ├── ...
+    │   └── NNN.sub
+    └── debruijn.sub
+```
+
+For each protocol there are 6 sub folders, containing 1, 2, 4, 8, 16 and 32 files, `SPLIT_FACTOR` indicates the number of keys per `.sub` file. This is useful when trying to get a close guess to the key.
+
 ## Currently supported protocols
 
 Right now the protocols supported are:
@@ -45,3 +59,18 @@ A protocol is defined by a few parameters passed to the constructor in the follo
 - transposition_table: how 0s and 1s are translated into flipper subghz `.sub` language
 - pilot_period: aka preamble, a recurring pattern at the beginning of each key, defaults to `None`
 - frequency: working frequency, defaults to 433.92
+
+# Timing
+
+To compute the time it takes to perform a bruteforce attack, we need to sum the time it takes to send each code:
+
+```
+(pilot_period + n_bits * bit_period) * repetition * 2^n_bits
+```
+
+For example, computing this for CAME turns out to be:
+
+```
+[(11520 + 320) + 12 * (320 + 640)] * 3 * 2^12 = 287.047.680 microseconds ~ 287 seconds
+```
+
