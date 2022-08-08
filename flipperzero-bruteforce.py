@@ -6,13 +6,30 @@ REPETITION = 4  # number of tx per key
 
 # Protocol settings: https://phreakerclub.com/447
 class Protocol:
+    """
+    Generic OOK communication protocol:
+        - name: the protocol's name
+        - n_bits: number of bits composing a key
+        - transposition_table: how 1s and 0s are translated to .sub format
+        - pilot_period: preamble PREPENDED to each key in sub format, empty by default
+        - stop_bit: APPENDED to each key in sub format, empty by default
+        - frequency: protocol's frequency in Hz, 433920000 by default
+    """
+
     def __init__(
-        self, name, n_bits, transposition_table, pilot_period=None, frequency=433920000
+        self,
+        name,
+        n_bits,
+        transposition_table,
+        pilot_period="",
+        stop_bit="",
+        frequency=433920000,
     ):
         self.name = name
         self.n_bits = n_bits
         self.transposition_table = transposition_table
         self.pilot_period = pilot_period
+        self.stop_bit = stop_bit
         self.file_header = (
             "Filetype: Flipper SubGhz RAW File\n"
             + "Version: 1\n"
@@ -21,20 +38,20 @@ class Protocol:
             + "Protocol: RAW\n"
         )
 
-    def key_dec_to_str(self, key_dec):
-        key_bin = f"{key_dec:012b}"  # format as 12 digits bin
-        return self.key_bin_to_str(key_bin)
+    def key_to_sub(self, key):
+        bin_str = f"{key:012b}"  # format as 12 digits bin
+        return self.key_bin_str_to_sub(bin_str)
 
-    def key_bin_to_str(self, key_bin):
-        key_str = self.pilot_period if self.pilot_period else ""
+    def key_bin_str_to_sub(self, bin_str):
+        sub = self.pilot_period
         line_len = 0  # keep lines under 2500 chars
-        for bit in key_bin:
+        for bit in bin_str:
             if line_len > 2500:
-                key_str += "\nRAW_Data: "
+                sub += "\nRAW_Data: "
                 line_len = 0
-            key_str += self.transposition_table[bit]
+            sub += self.transposition_table[bit]
             line_len += len(self.transposition_table[bit])
-        return key_str
+        return sub
 
     def de_bruijn(self):
         """
@@ -59,9 +76,9 @@ class Protocol:
 
         db(1, 1)
         db_seq = "".join(alphabet[i] for i in sequence)
-        return self.key_bin_to_str(db_seq)
+        return self.key_bin_str_to_sub(db_seq)
 
-    def generate_sub_files(self):
+    def generate_sub_files(self, n_folders=6):
         """
         Generate sub files grouped by split nuber of keys
         Directory structure:
@@ -69,42 +86,51 @@ class Protocol:
             - protocol_name
                 - split_factor
                     - split_factor_id.sub
+
+        n_folder: number of folders to create,
+                  folder [1..n_folders] will contain [2^1..2^n_folders] files,
+                  each file containing [2^n_bits/2^1..2^n_bits/2^n_folders] keys.
         """
+        if self.n_bits > 12:  # take up too much space for github
+            print(f"Skipping {self.name}, takes up too much space for github")
+            return
         base_dir = f"sub_files/{self.name}"
         os.makedirs(base_dir, exist_ok=True)
         # Create debruijn.sub
         filename = f"{base_dir}/debruijn.sub"
         with open(filename, "w") as f:
             f.write(self.file_header)
-        with open(filename, "a") as f:
             f.write("RAW_Data: " + self.de_bruijn() + "\n")
-        if self.n_bits > 12:  # take up too much space, try de bruijn instead
-            return
-        # Generate sets of 1, 2, 4, 8, 16, 32 .sub files
-        splits = [int(pow(2, self.n_bits) / _) for _ in [pow(2, _) for _ in range(6)]]
-        for split in splits:
-            split_dir = f"{base_dir}/{split}"
-            os.makedirs(split_dir, exist_ok=True)
-
-            for key_dec in range(pow(2, self.n_bits)):
-                key_str = self.key_dec_to_str(key_dec) * REPETITION
-
-                if (key_dec % split) == 0:
-                    filename = f"{split_dir}/{key_dec / split:03.0f}.sub"
-                    with open(filename, "w") as f:
-                        f.write(self.file_header)
-
-                with open(filename, "a") as f:
-                    f.write("RAW_Data: " + key_str + "\n")
+        # Generate sets of 2^0, 2^1, .., 2^n_folders .sub files
+        splits = [
+            int(pow(2, self.n_bits) / _) for _ in [pow(2, _) for _ in range(n_folders)]
+        ]
+        [os.makedirs(f"{base_dir}/{split}", exist_ok=True) for split in splits]
+        split_files = [None] * len(splits)  # current file per split
+        for key in range(pow(2, self.n_bits)):
+            for idx, split in enumerate(splits):
+                if key % split == 0:
+                    # close previous file if open
+                    if split_files[idx] is not None:
+                        split_files[idx].close()
+                    # TODO: use more significative filenames, example:
+                    # 2048/a, 2048/b 1024/a_1 1024/a_2 1024/a_3 1024/a_4
+                    filename = f"{base_dir}/{split}/{key / split:03.0f}.sub"
+                    split_files[idx] = open(filename, "w")
+                    split_files[idx].write(self.file_header)
+                split_files[idx].write(
+                    "RAW_Data: " + self.key_to_sub(key) * REPETITION + "\n"
+                )
+        # close all files
+        [f.close() for f in split_files if f is not None]
 
 
 protocols = [
+    # Protocol("8bit", 8, {"0": "200 -400 ", "1": "400 -200 "}),  # example of a generic 8 bit protocol
     Protocol("CAME", 12, {"0": "-320 640 ", "1": "-640 320 "}, "-11520 320 "),
     Protocol("NICE", 12, {"0": "-700 1400 ", "1": "-1400 700 "}, "-25200 700 "),
-    # 24 bits take up too much space to upload to github
-    # Protocol("PT-2240", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
-    # Protocol("PT-2262", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
-    Protocol("8bit", 8, {"0": "200 -400 ", "1": "400 -200 "}),  # generic 8 bit protocol
+    Protocol("PT-2240", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
+    Protocol("PT-2262", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
 ]
 
 for p in protocols:
