@@ -39,7 +39,7 @@ class Protocol:
         )
 
     def key_to_sub(self, key):
-        bin_str = f"{key:012b}"  # format as 12 digits bin
+        bin_str = f"{key:0{self.n_bits}b}"
         return self.key_bin_str_to_sub(bin_str)
 
     def key_bin_str_to_sub(self, bin_str):
@@ -51,6 +51,7 @@ class Protocol:
                 line_len = 0
             sub += self.transposition_table[bit]
             line_len += len(self.transposition_table[bit])
+        sub += self.stop_bit
         return sub
 
     def de_bruijn(self):
