@@ -1,7 +1,7 @@
 import os
 
 # Script settings:
-REPETITION = 4  # number of tx per key
+REPETITION = 3  # number of tx per key
 
 
 # Protocol settings: https://phreakerclub.com/447
