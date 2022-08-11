@@ -97,6 +97,7 @@ Other attempts we made to shorten the bruteforce were:
 - Remove second pilot signal &rarr; ❌
 - Remove half a bit from the end &rarr; ❌
 - Removing the pilot signal between the repetion &rarr; ❌
+- Reducing pulse length keeping the same ratio as the original &rarr; ✅
 
 Further testing will be performed for the other protocols.
 
