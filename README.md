@@ -76,6 +76,21 @@ A protocol is defined by a few parameters passed to the constructor in the follo
 - pilot_period: aka preamble, a recurring pattern at the beginning of each key, defaults to `None`
 - frequency: working frequency, defaults to 433.92
 
+### Optimization
+
+After a little testing working with CAME 12 bit, it seems that as long as the **ratio** between the bits' lenghts is respected (`x`: short pulse, `2x`: long pulse, `36x`: pilot period) the actual duration of x can be lowered from the original 320 microseconds. From testing it seems that 250 microseconds is stable, shortening the bruteforce by a good minute (224 seconds against 287 seconds). From a code point of view:
+
+```python
+protocols = [
+    # Old CAME
+    Protocol("CAME", 12, {"0": "-320 640 ", "1": "-640 320 "}, "-11520 320 "),
+    # New CAME
+    Protocol("CAME", 12, {"0": "-250 500 ", "1": "-500 250 "}, "-9000 250 "),
+]
+```
+
+Further testing will be performed for the other protocols.
+
 # Timing
 
 To compute the time it takes to perform a bruteforce attack, we need to sum the time it takes to send each code:
@@ -87,5 +102,5 @@ To compute the time it takes to perform a bruteforce attack, we need to sum the 
 For example, computing this for CAME turns out to be:
 
 ```
-[(11520 + 320) + 12 * (320 + 640)] * 3 * 2^12 = 287.047.680 microseconds ~ 287 seconds
+[(9000 + 250) + 12 * (250 + 500)] * 3 * 2^12 = 224.256.000 microseconds ~ 224 seconds
 ```
