@@ -44,6 +44,7 @@ class Protocol:
         return self.key_bin_str_to_sub(bin_str)
 
     def key_bin_str_to_sub(self, bin_str, debruijn=False):
+        sub = ""
         if not debruijn:
             sub = self.pilot_period
         line_len = 0  # keep lines under 2500 chars
