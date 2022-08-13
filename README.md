@@ -52,7 +52,6 @@ Right now the protocols supported are:
 - CAME-12bit
 - NICE-12bit
 - PT-2240
-- PT-2262
 
 More info about them can be found [here](https://phreakerclub.com/447)
 
