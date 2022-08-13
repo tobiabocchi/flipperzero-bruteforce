@@ -64,7 +64,7 @@ class Protocol:
         """
         alphabet = "01"
         k = 2
-        a = [0] * k * (self.n_bits if self.pilot_period is None else self.n_bits + 1)
+        a = [0] * k * (self.n_bits if self.pilot_period == "" else self.n_bits + 1)
         sequence = []
 
         def db(t, p):
