@@ -26,23 +26,25 @@ It will generate bruteforce files for all the specified protocols organized in m
 sub_files/
 └── PROTOCOL_NAME
     ├── SPLIT_FACTOR
-    │   ├── 000.sub
-    │   ├── 001.sub
+    │   ├── <parent_file>_000.sub
+    │   ├── <parent_file>_001.sub
     │   ├── ...
-    │   └── NNN.sub
+    │   └── <parent_file>_NNN.sub
     └── debruijn.sub
 ```
 
-For each protocol there are 6 sub folders, containing 1, 2, 4, 8, 16 and 32 files, `SPLIT_FACTOR` indicates the number of keys per `.sub` file. This is useful when trying to get a close guess to the key.
+For each protocol there are 6 sub folders, containing 1, 2, 4, 8, 16 and 32 files, `SPLIT_FACTOR` (the directory's name) indicates the number of keys per `.sub` file. `<parent_file>` simply indicates the parent file of the current `.sub` file, for example, inside folder `64` we have `003_006.sub`, its parent file is `128/<parent_file>_003` and its children will be `32/006_<file_id>`. This is useful when trying to get a close guess to the key.
 
 For example, let's say you are trying to bruteforce a gate using CAME 12 bit protocol:
 
 1. Play the single file (`4096/` folder) to make sure the attack works
-2. Play the two files inside `2048/` folder, to see which half contains the correct key (suppose the second one works, containing keys from 2048 4095)
-3. Play the second two files (`002.sub`, `003.sub`) inside the `1024/` folder to narrow the search
+2. Play the two files inside `2048/` folder, to see which half contains the correct key (suppose the second one works, `000_001.sub` containing keys from 2048 4095)
+3. Play its children (`001_002.sub`, `001_003.sub`) inside the `1024/` folder to narrow the search
 4. Keep doing this until you reach the last files inside the `128/` folder, these files take less than 10 seconds to send, almost the same as having the actual remote.
 
 If you wanted to narrow the search even more you could modify the script to generate your own files containing less keys.
+
+The `debruijn.sub` files are there just for reference I have not really been able to use them succesfully, they try to simulate a debruijn sequence for the protocol, although this is quite unfeasible because most protocols have some sort of stop bit or pilot bit appended or prepended to the actual key that differs from a normal bit. Also I have not yet found a gate using a bitshift register.
 
 ## Currently supported protocols
 
