@@ -80,7 +80,7 @@ class Protocol:
 
         db(1, 1)
         db_seq = "".join(alphabet[i] for i in sequence)
-        return self.key_bin_str_to_sub(db_seq)
+        return self.key_bin_str_to_sub(db_seq, True)
 
     def generate_sub_files(self, n_folders=6):
         """
