@@ -1,4 +1,5 @@
 import os
+import math
 
 # Script settings:
 REPETITION = 3  # number of tx per key
@@ -114,9 +115,7 @@ class Protocol:
                     # close previous file if open
                     if split_files[idx] is not None:
                         split_files[idx].close()
-                    # TODO: use more significative filenames, example:
-                    # 2048/a, 2048/b 1024/a_1 1024/a_2 1024/a_3 1024/a_4
-                    filename = f"{base_dir}/{split}/{key / split:03.0f}.sub"
+                    filename = f"{base_dir}/{split}/{math.floor(key/(split*2)):03d}_{key/split:03.0f}.sub"
                     split_files[idx] = open(filename, "w")
                     split_files[idx].write(self.file_header)
                 split_files[idx].write(
