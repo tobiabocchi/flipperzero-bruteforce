@@ -48,8 +48,9 @@ If you wanted to narrow the search even more you could modify the script to gene
 
 Right now the protocols supported are:
 
-- CAME
-- NICE
+- Linear-10bit
+- CAME-12bit
+- NICE-12bit
 - PT-2240
 - PT-2262
 
