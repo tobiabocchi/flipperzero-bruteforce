@@ -43,8 +43,9 @@ class Protocol:
         bin_str = f"{key:0{self.n_bits}b}"
         return self.key_bin_str_to_sub(bin_str)
 
-    def key_bin_str_to_sub(self, bin_str):
-        sub = self.pilot_period
+    def key_bin_str_to_sub(self, bin_str, debruijn=False):
+        if not debruijn:
+            sub = self.pilot_period
         line_len = 0  # keep lines under 2500 chars
         for bit in bin_str:
             if line_len > 2500:
@@ -52,7 +53,8 @@ class Protocol:
                 line_len = 0
             sub += self.transposition_table[bit]
             line_len += len(self.transposition_table[bit])
-        sub += self.stop_bit
+        if not debruijn:
+            sub += self.stop_bit
         return sub
 
     def de_bruijn(self):
@@ -62,7 +64,7 @@ class Protocol:
         """
         alphabet = "01"
         k = 2
-        a = [0] * k * self.n_bits
+        a = [0] * k * (self.n_bits if self.pilot_period is None else self.n_bits + 1)
         sequence = []
 
         def db(t, p):
@@ -130,7 +132,7 @@ protocols = [
         "Linear-10bit",
         10,
         {"0": "500 -1500 ", "1": "1500 -500 "},
-        stop_bit="-21500 ",
+        stop_bit="1 -21500 ",
         frequency=300000000,
     ),
     Protocol("CAME-12bit", 12, {"0": "-250 500 ", "1": "-500 250 "}, "-9000 250 "),
