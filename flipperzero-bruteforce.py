@@ -1,9 +1,6 @@
 import os
 import math
 
-# Script settings:
-REPETITION = 3  # number of tx per key
-
 
 # Protocol settings: https://phreakerclub.com/447
 class Protocol:
@@ -15,6 +12,7 @@ class Protocol:
         - pilot_period: preamble PREPENDED to each key in sub format, empty by default
         - stop_bit: APPENDED to each key in sub format, empty by default
         - frequency: protocol's frequency in Hz, 433920000 by default
+        - repetition: number of times to repeat each key, 3 by default
     """
 
     def __init__(
@@ -25,12 +23,14 @@ class Protocol:
         pilot_period="",
         stop_bit="",
         frequency=433920000,
+        repetition=3,
     ):
         self.name = name
         self.n_bits = n_bits
         self.transposition_table = transposition_table
         self.pilot_period = pilot_period
         self.stop_bit = stop_bit
+        self.repetition = repetition
         self.file_header = (
             "Filetype: Flipper SubGhz RAW File\n"
             + "Version: 1\n"
@@ -122,7 +122,7 @@ class Protocol:
                     split_files[idx] = open(filename, "w")
                     split_files[idx].write(self.file_header)
                 split_files[idx].write(
-                    "RAW_Data: " + self.key_to_sub(key) * REPETITION + "\n"
+                    "RAW_Data: " + self.key_to_sub(key) * self.repetition + "\n"
                 )
         # close all files
         [f.close() for f in split_files if f is not None]
@@ -135,6 +135,7 @@ protocols = [
         {"0": "500 -1500 ", "1": "1500 -500 "},
         stop_bit="1 -21500 ",
         frequency=300000000,
+        repetition=5,
     ),
     Protocol("CAME-12bit", 12, {"0": "-250 500 ", "1": "-500 250 "}, "-9000 250 "),
     Protocol("NICE-12bit", 12, {"0": "-700 1400 ", "1": "-1400 700 "}, "-25200 700 "),
