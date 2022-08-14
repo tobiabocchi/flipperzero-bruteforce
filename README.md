@@ -94,11 +94,10 @@ protocols = [
 Other attempts we made to shorten the bruteforce were:
 
 - Combining two 12 bit codes &rarr; ❌
-- Remove 1Bit from the end &rarr; ❌
-- Remove pilot signal &rarr; ❌
-- Remove second pilot signal &rarr; ❌
-- Remove half a bit from the end &rarr; ❌
+- Removing/adding 1Bit from/to the end/beginning &rarr; ❌
+- Sending only the first pilot signal &rarr; ❌
 - Removing the pilot signal between the repetion &rarr; ❌
+- Remove half a bit from the end &rarr; ❌
 - Reducing pulse length keeping the same ratio as the original &rarr; ✅
 
 Further testing will be performed for the other protocols.
