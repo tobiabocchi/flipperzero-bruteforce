@@ -48,12 +48,13 @@ The `debruijn.sub` files are there just for reference I have not really been abl
 
 ## Currently supported protocols
 
-Right now the protocols supported are:
-
-- Linear-10bit
-- CAME-12bit
-- NICE-12bit
-- PT-2240
+| Protocol ℹ️  | Timing ⏱  | Testing 🧪    |
+|-------------|-----------|---------------|
+| CAME        | 287 sec   | Tested        |
+| Linear      | 212 sec   | Tested        |
+| NICE        | 628 sec   | Untested      |
+| PT-2240     | 800 hours | Untested      |
+| CAME-fast   | 224 sec   | Tested        |
 
 More info about them can be found [here](https://phreakerclub.com/447)
 
@@ -75,8 +76,10 @@ A protocol is defined by a few parameters passed to the constructor in the follo
 - name: the name of the protocol
 - n_bits: the number of bits for a single key
 - transposition_table: how 0s and 1s are translated into flipper subghz `.sub` language
-- pilot_period: aka preamble, a recurring pattern at the beginning of each key, defaults to `None`
+- pilot_period: aka preamble, a recurring pattern at the beginning of each key, inexistant by default
+- stop_bit: a recurring pattern at the end of each key, inexistant by default
 - frequency: working frequency, defaults to 433.92
+- repetition: number of transmissions per key in the bruteforce
 
 ### Optimization
 
