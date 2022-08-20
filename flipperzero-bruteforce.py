@@ -130,16 +130,31 @@ class Protocol:
 
 protocols = [
     Protocol(
-        "Linear-10bit",
-        10,
-        {"0": "500 -1500 ", "1": "1500 -500 "},
+        name="Linear-10bit-433",
+        n_bits=10,
+        transposition_table={"0": "500 -1500 ", "1": "1500 -500 "},
         stop_bit="1 -21500 ",
         frequency=300000000,
         repetition=5,
     ),
-    Protocol("CAME-12bit", 12, {"0": "-250 500 ", "1": "-500 250 "}, "-9000 250 "),
-    Protocol("NICE-12bit", 12, {"0": "-700 1400 ", "1": "-1400 700 "}, "-25200 700 "),
-    Protocol("PT-2240", 24, {"0": "450 -1350 ", "1": "1350 -450 "}, "450 -13950 "),
+    Protocol(
+        name="CAME-12bit-433",
+        n_bits=12,
+        transposition_table={"0": "-250 500 ", "1": "-500 250 "},
+        pilot_period="-9000 250 ",
+    ),
+    Protocol(
+        name="NICE-12bit-433",
+        n_bits=12,
+        transposition_table={"0": "-700 1400 ", "1": "-1400 700 "},
+        pilot_period="-25200 700 ",
+    ),
+    Protocol(
+        name="PT-2240-433",
+        n_bits=24,
+        transposition_table={"0": "450 -1350 ", "1": "1350 -450 "},
+        pilot_period="450 -13950 ",
+    ),
 ]
 
 for p in protocols:
