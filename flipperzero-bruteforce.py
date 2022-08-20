@@ -140,6 +140,12 @@ protocols = [
     Protocol(
         name="CAME-12bit-433",
         n_bits=12,
+        transposition_table={"0": "-320 640 ", "1": "-640 320 "},
+        pilot_period="-11520 320 ",
+    ),
+    Protocol(
+        name="CAME-12bit-433-fast",
+        n_bits=12,
         transposition_table={"0": "-250 500 ", "1": "-500 250 "},
         pilot_period="-9000 250 ",
     ),
@@ -157,6 +163,13 @@ protocols = [
     ),
     Protocol(
         name="CAME-12bit-868",
+        n_bits=12,
+        transposition_table={"0": "-320 640 ", "1": "-640 320 "},
+        pilot_period="-11520 320 ",
+        frequency=868350000,
+    ),
+    Protocol(
+        name="CAME-12bit-868-fast",
         n_bits=12,
         transposition_table={"0": "-250 500 ", "1": "-500 250 "},
         pilot_period="-9000 250 ",
