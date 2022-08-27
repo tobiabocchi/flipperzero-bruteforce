@@ -83,7 +83,7 @@ A protocol is defined by a few parameters passed to the constructor in the follo
 
 ### Optimization
 
-After a little testing working with CAME 12 bit (together with [@BitcoinRaven](https://github.com/BitcoinRaven)), it seems that as long as the **ratio** between the bits' lenghts is respected (`x`: short pulse, `2x`: long pulse, `36x`: pilot period) the actual duration of x can be lowered from the original 320 microseconds. From testing it seems that 250 microseconds is stable, shortening the bruteforce by a good minute (224 seconds against 287 seconds). From a code point of view:
+After a little testing working with CAME 12 bit (together with [@BitcoinRaven](https://github.com/BitcoinRaven)), it seems that as long as the **ratio** between the bits' lengths is respected (`x`: short pulse, `2x`: long pulse, `36x`: pilot period) the actual duration of x can be lowered from the original 320 microseconds. From testing it seems that 250 microseconds is stable, shortening the bruteforce by a good minute (224 seconds against 287 seconds). From a code point of view:
 
 ```python
 protocols = [
