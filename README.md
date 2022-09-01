@@ -54,6 +54,8 @@ The `debruijn.sub` files are there just for reference I have not really been abl
 | CAME        | 868.35       | 12   | 287 sec   | Untested      |
 | CAME-fast   | 433.92       | 12   | 224 sec   | Tested        |
 | CAME-fast   | 868.35       | 12   | 224 sec   | Untested      |
+| Chamberlain | 300          | 9    | 123 sec   | Untested      |
+| Chamberlain | 315          | 9    | 123 sec   | Untested      |
 | Linear      | 300          | 10   | 212 sec   | Tested        |
 | Linear      | 310          | 10   | 212 sec   | Untested      |
 | NICE        | 433.92       | 12   | 628 sec   | Untested      |
