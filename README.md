@@ -48,13 +48,17 @@ The `debruijn.sub` files are there just for reference I have not really been abl
 
 ## Currently supported protocols
 
-| Protocol ℹ️  | Timing ⏱  | Testing 🧪    |
-|-------------|-----------|---------------|
-| CAME        | 287 sec   | Tested        |
-| Linear      | 212 sec   | Tested        |
-| NICE        | 628 sec   | Untested      |
-| PT-2240     | 800 hours | Untested      |
-| CAME-fast   | 224 sec   | Tested        |
+| Protocol ℹ️  | Frequency 📡 | Bits | Timing ⏱  | Testing 🧪    |
+|-------------|--------------|------|-----------|---------------|
+| CAME        | 433.92       | 12   | 287 sec   | Tested        |
+| CAME        | 868.35       | 12   | 287 sec   | Untested      |
+| CAME-fast   | 433.92       | 12   | 224 sec   | Tested        |
+| CAME-fast   | 868.35       | 12   | 224 sec   | Untested      |
+| Linear      | 300          | 10   | 212 sec   | Tested        |
+| Linear      | 310          | 10   | 212 sec   | Untested      |
+| NICE        | 433.92       | 12   | 628 sec   | Untested      |
+| NICE        | 868.35       | 12   | 628 sec   | Untested      |
+| PT-2240     | 433.92       | 24   | 800 hours | Untested      |
 
 More info about them can be found [here](https://phreakerclub.com/447)
 
