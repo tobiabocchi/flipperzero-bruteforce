@@ -156,6 +156,14 @@ protocols = [
         frequency=868350000,
     ),
     Protocol(
+        name="Chamberlain-9bit-315",
+        n_bits=10,
+        transposition_table={"0": "-1000 3000 ", "1": "-2000 2000 "},
+        pilot_period="-39000 1000 ",
+        stop_bit="-3000 1000 ",
+        frequency=315000000,
+    ),
+    Protocol(
         name="Chamberlain-9bit-390",
         n_bits=10,
         transposition_table={"0": "-1000 3000 ", "1": "-2000 2000 "},
