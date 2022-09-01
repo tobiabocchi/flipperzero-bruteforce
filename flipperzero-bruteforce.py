@@ -172,6 +172,14 @@ protocols = [
         repetition=5,
     ),
     Protocol(
+        name="Linear-10bit-310",
+        n_bits=10,
+        transposition_table={"0": "500 -1500 ", "1": "1500 -500 "},
+        stop_bit="1 -21500 ",
+        frequency=310000000,
+        repetition=5,
+    ),
+    Protocol(
         name="NICE-12bit-433",
         n_bits=12,
         transposition_table={"0": "-700 1400 ", "1": "-1400 700 "},
