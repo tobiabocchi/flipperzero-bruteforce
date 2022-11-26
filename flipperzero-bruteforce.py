@@ -222,6 +222,7 @@ protocols = [
         n_bits=24,
         transposition_table={"0": "320 -960 ", "1": "960 -320 "},
         pilot_period="320 -9920 ",
+        frequency=433650000,
         key_range=range(0x11A01C, 0x11A0E4),  # 300 keys
     ),
 ]
