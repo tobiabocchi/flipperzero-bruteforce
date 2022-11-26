@@ -62,7 +62,9 @@ The `debruijn.sub` files are there just for reference I have not really been abl
 | NICE        | 868.35       | 12   | 628 sec   | Untested      |
 | PT-2240     | 433.92       | 24   | 800 hours | Untested      |
 
-More info about them can be found [here](https://phreakerclub.com/447)
+### Currently supported Pagers
+
+Pagers for the Italian restaurant "Spacca", listed as *Spacca_pager*
 
 ### Adding a protocol
 
