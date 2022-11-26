@@ -13,6 +13,7 @@ class Protocol:
         - stop_bit: APPENDED to each key in sub format, empty by default
         - frequency: protocol's frequency in Hz, 433920000 by default
         - repetition: number of times to repeat each key, 3 by default
+        - key_range: range of keys to generate, None by default
     """
 
     def __init__(
@@ -24,6 +25,7 @@ class Protocol:
         stop_bit="",
         frequency=433920000,
         repetition=3,
+        key_range=None,
     ):
         self.name = name
         self.n_bits = n_bits
@@ -31,6 +33,7 @@ class Protocol:
         self.pilot_period = pilot_period
         self.stop_bit = stop_bit
         self.repetition = repetition
+        self.key_range = key_range
         self.file_header = (
             "Filetype: Flipper SubGhz RAW File\n"
             + "Version: 1\n"
@@ -96,7 +99,7 @@ class Protocol:
                   folder [1..n_folders] will contain [2^1..2^n_folders] files,
                   each file containing [2^n_bits/2^1..2^n_bits/2^n_folders] keys.
         """
-        if self.n_bits > 12:  # take up too much space for github
+        if self.n_bits > 12 and self.key_range is None:  # take up too much space for github
             print(f"Skipping {self.name}, takes up too much space for github")
             return
         base_dir = f"sub_files/{self.name}"
@@ -106,6 +109,14 @@ class Protocol:
         with open(filename, "w") as f:
             f.write(self.file_header)
             f.write("RAW_Data: " + self.de_bruijn() + "\n")
+        # If key_range is defined, generate those keys only
+        if self.key_range is not None:
+            filename = f"{base_dir}/bf_{self.key_range[0]}-{self.key_range[-1]}.sub"
+            with open(filename, "w") as f:
+                f.write(self.file_header)
+                for key in self.key_range:
+                    f.write("RAW_Data: " + self.key_to_sub(key) * self.repetition + "\n")
+            return
         # Generate sets of 2^0, 2^1, .., 2^n_folders .sub files
         splits = [
             int(pow(2, self.n_bits) / _) for _ in [pow(2, _) for _ in range(n_folders)]
@@ -209,5 +220,6 @@ protocols = [
 ]
 
 for p in protocols:
+    # TODO multithread this
     p.generate_sub_files()
     print(f"{p.name} done")
