@@ -104,11 +104,6 @@ class Protocol:
             return
         base_dir = f"sub_files/{self.name}"
         os.makedirs(base_dir, exist_ok=True)
-        # Create debruijn.sub
-        filename = f"{base_dir}/debruijn.sub"
-        with open(filename, "w") as f:
-            f.write(self.file_header)
-            f.write("RAW_Data: " + self.de_bruijn() + "\n")
         # If key_range is defined, generate those keys only
         if self.key_range is not None:
             filename = f"{base_dir}/bf_{self.key_range[0]}-{self.key_range[-1]}.sub"
@@ -117,6 +112,11 @@ class Protocol:
                 for key in self.key_range:
                     f.write("RAW_Data: " + self.key_to_sub(key) * self.repetition + "\n")
             return
+        # Create debruijn.sub
+        filename = f"{base_dir}/debruijn.sub"
+        with open(filename, "w") as f:
+            f.write(self.file_header)
+            f.write("RAW_Data: " + self.de_bruijn() + "\n")
         # Generate sets of 2^0, 2^1, .., 2^n_folders .sub files
         splits = [
             int(pow(2, self.n_bits) / _) for _ in [pow(2, _) for _ in range(n_folders)]
@@ -216,6 +216,13 @@ protocols = [
         n_bits=24,
         transposition_table={"0": "450 -1350 ", "1": "1350 -450 "},
         pilot_period="450 -13950 ",
+    ),
+    Protocol(
+        name="Spacca_pager",
+        n_bits=24,
+        transposition_table={"0": "320 -960 ", "1": "960 -320 "},
+        pilot_period="320 -9920 ",
+        key_range=range(0x11A01C, 0x11A0E4),  # 300 keys
     ),
 ]
 
