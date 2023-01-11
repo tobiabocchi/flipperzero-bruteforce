@@ -48,23 +48,28 @@ The `debruijn.sub` files are there just for reference I have not really been abl
 
 ## Currently supported protocols
 
-| Protocol ℹ️  | Frequency 📡 | Bits | Timing ⏱  | Testing 🧪    |
-|-------------|--------------|------|-----------|---------------|
-| CAME        | 433.92       | 12   | 287 sec   | Tested        |
-| CAME        | 868.35       | 12   | 287 sec   | Untested      |
-| CAME-fast   | 433.92       | 12   | 224 sec   | Tested        |
-| CAME-fast   | 868.35       | 12   | 224 sec   | Untested      |
-| Chamberlain | 300          | 9    | 123 sec   | Untested      |
-| Chamberlain | 315          | 9    | 123 sec   | Untested      |
-| Linear      | 300          | 10   | 212 sec   | Tested        |
-| Linear      | 310          | 10   | 212 sec   | Untested      |
-| NICE        | 433.92       | 12   | 628 sec   | Untested      |
-| NICE        | 868.35       | 12   | 628 sec   | Untested      |
-| PT-2240     | 433.92       | 24   | 800 hours | Untested      |
+| Protocol ℹ️ | Frequency 📡 | Bits | Timing ⏱  | Testing 🧪 |
+| ----------- | ------------ | ---- | --------- | ---------- |
+| CAME        | 433.92       | 12   | 287 sec   | Tested     |
+| CAME        | 868.35       | 12   | 287 sec   | Untested   |
+| CAME-fast   | 433.92       | 12   | 224 sec   | Tested     |
+| CAME-fast   | 868.35       | 12   | 224 sec   | Untested   |
+| Chamberlain | 300          | 9    | 123 sec   | Untested   |
+| Chamberlain | 315          | 9    | 123 sec   | Untested   |
+| Linear      | 300          | 10   | 212 sec   | Tested     |
+| Linear      | 310          | 10   | 212 sec   | Untested   |
+| NICE        | 433.92       | 12   | 628 sec   | Untested   |
+| NICE        | 868.35       | 12   | 628 sec   | Untested   |
+| PT-2240     | 433.92       | 24   | 800 hours | Untested   |
+| Ansonic     | 434.075      | 12   | 276 sec   | Untested   |
+| Holtek      | 315          | 12   | 387 sec   | Untested   |
+| Holtek      | 433.92       | 12   | 387 sec   | Untested   |
+| Holtek      | 868.35       | 12   | 387 sec   | Untested   |
+| Holtek      | 915          | 12   | 387 sec   | Untested   |
 
 ### Currently supported Pagers
 
-Pagers for the Italian restaurant "Spacca", listed as *Spacca_pager*
+Pagers for the Italian restaurant "Spacca", listed as _Spacca_pager_
 
 ### Adding a protocol
 
