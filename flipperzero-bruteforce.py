@@ -236,6 +236,33 @@ protocols = [
         frequency=434075000,
         pilot_period="-19425 555 ",
     ),
+    Protocol(
+        name="Holtek-315",
+        n_bits=12,
+        transposition_table={"0": "-870 430 ", "1": "-430 870 "},
+        frequency=315000000,
+        pilot_period="-15480 430 ",
+    ),
+    Protocol(
+        name="Holtek-433",
+        n_bits=12,
+        transposition_table={"0": "-870 430 ", "1": "-430 870 "},
+        pilot_period="-15480 430 ",
+    ),
+    Protocol(
+        name="Holtek-868",
+        n_bits=12,
+        transposition_table={"0": "-870 430 ", "1": "-430 870 "},
+        frequency=868350000,
+        pilot_period="-15480 430 ",
+    ),
+    Protocol(
+        name="Holtek-915",
+        n_bits=12,
+        transposition_table={"0": "-870 430 ", "1": "-430 870 "},
+        frequency=915000000,
+        pilot_period="-15480 430 ",
+    ),
 ]
 
 for p in protocols:
