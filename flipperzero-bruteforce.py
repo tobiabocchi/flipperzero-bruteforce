@@ -99,7 +99,9 @@ class Protocol:
                   folder [1..n_folders] will contain [2^1..2^n_folders] files,
                   each file containing [2^n_bits/2^1..2^n_bits/2^n_folders] keys.
         """
-        if self.n_bits > 12 and self.key_range is None:  # take up too much space for github
+        if (
+            self.n_bits > 12 and self.key_range is None
+        ):  # take up too much space for github
             print(f"Skipping {self.name}, takes up too much space for github")
             return
         base_dir = f"sub_files/{self.name}"
@@ -110,7 +112,9 @@ class Protocol:
             with open(filename, "w") as f:
                 f.write(self.file_header)
                 for key in self.key_range:
-                    f.write("RAW_Data: " + self.key_to_sub(key) * self.repetition + "\n")
+                    f.write(
+                        "RAW_Data: " + self.key_to_sub(key) * self.repetition + "\n"
+                    )
             return
         # Create debruijn.sub
         filename = f"{base_dir}/debruijn.sub"
@@ -218,12 +222,19 @@ protocols = [
         pilot_period="450 -13950 ",
     ),
     Protocol(
-        name="Spacca_pager",
+        name="Spacca_pager-433",
         n_bits=24,
         transposition_table={"0": "320 -960 ", "1": "960 -320 "},
         pilot_period="320 -9920 ",
         frequency=433650000,
         key_range=range(0x11A01C, 0x11A0E4),  # 300 keys
+    ),
+    Protocol(
+        name="Ansonic-434",
+        n_bits=12,
+        transposition_table={"0": "-1111 555 ", "1": "-555 1111 "},
+        frequency=434075000,
+        pilot_period="-19425 555 ",
     ),
 ]
 
