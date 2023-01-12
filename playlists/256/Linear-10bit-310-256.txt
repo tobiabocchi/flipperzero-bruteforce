@@ -1,0 +1,4 @@
+sub: /ext/subghz/static_brute/Linear-10bit-310/256/001_003.sub
+sub: /ext/subghz/static_brute/Linear-10bit-310/256/001_002.sub
+sub: /ext/subghz/static_brute/Linear-10bit-310/256/000_000.sub
+sub: /ext/subghz/static_brute/Linear-10bit-310/256/000_001.sub

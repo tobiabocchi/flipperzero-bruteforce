@@ -1,0 +1,16 @@
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/003_006.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/003_007.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/002_005.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/002_004.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/001_003.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/001_002.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/000_000.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/004_008.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/004_009.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/000_001.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/005_010.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/005_011.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/006_013.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/006_012.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/007_015.sub
+sub: /ext/subghz/static_brute/NICE-12bit-868/256/007_014.sub
