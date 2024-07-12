@@ -99,10 +99,9 @@ class Protocol:
                   folder [1..n_folders] will contain [2^1..2^n_folders] files,
                   each file containing [2^n_bits/2^1..2^n_bits/2^n_folders] keys.
 
-        Optional: If you want the file to be for GitHub, set the variable for_github in line 272 to True, you may also omit it to ignore the file check max-size.
         """
         if (
-            self.n_bits > 12 and self.key_range is None and for_github is True
+            self.n_bits > 12 and self.key_range is None
         ):  # take up too much space for GitHub
             print(f"Skipping {self.name}, takes up too much space for github")
             return
@@ -218,12 +217,6 @@ protocols = [
         frequency=868350000,
     ),
     Protocol(
-        name="PT-2240-433",
-        n_bits=24,
-        transposition_table={"0": "450 -1350 ", "1": "1350 -450 "},
-        pilot_period="450 -13950 ",
-    ),
-    Protocol(
         name="Spacca_pager-433",
         n_bits=24,
         transposition_table={"0": "320 -960 ", "1": "960 -320 "},
@@ -269,5 +262,5 @@ protocols = [
 
 for p in protocols:
     # TODO multithread this
-    p.generate_sub_files(for_github=False) # set for_github to True if you want the file to be for GitHub and max sized.
+    p.generate_sub_files() # set for_github to True if you want the file to be for GitHub and max sized.
     print(f"{p.name} done")
