@@ -86,7 +86,7 @@ class Protocol:
         db_seq = "".join(alphabet[i] for i in sequence)
         return self.key_bin_str_to_sub(db_seq, True)
 
-    def generate_sub_files(self, n_folders=6):
+    def generate_sub_files(self, n_folders=6, for_github=False):
         """
         Generate sub files grouped by split nuber of keys
         Directory structure:
@@ -98,10 +98,12 @@ class Protocol:
         n_folder: number of folders to create,
                   folder [1..n_folders] will contain [2^1..2^n_folders] files,
                   each file containing [2^n_bits/2^1..2^n_bits/2^n_folders] keys.
+
+        Optional: If you want the file to be for GitHub, set the variable for_github in line 272 to True, you may also omit it to ignore the file check max-size.
         """
         if (
-            self.n_bits > 12 and self.key_range is None
-        ):  # take up too much space for github
+            self.n_bits > 12 and self.key_range is None and for_github is True
+        ):  # take up too much space for GitHub
             print(f"Skipping {self.name}, takes up too much space for github")
             return
         base_dir = f"sub_files/{self.name}"
@@ -267,5 +269,5 @@ protocols = [
 
 for p in protocols:
     # TODO multithread this
-    p.generate_sub_files()
+    p.generate_sub_files(for_github=False) # set for_github to True if you want the file to be for GitHub and max sized.
     print(f"{p.name} done")
